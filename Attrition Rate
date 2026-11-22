@@ -1,0 +1,12 @@
+/* Department and Gender Wise Attrition Rate */
+
+SELECT
+    department,
+    gender,
+    COUNT(*) FILTER (WHERE attrition = 'Yes') AS attrition_yes,
+    COUNT(*) FILTER (WHERE attrition = 'No')  AS attrition_no,
+    COUNT(*) AS total_emp,
+    ROUND( 100.0 * COUNT(*) FILTER (WHERE attrition = 'Yes') / NULLIF(COUNT(*), 0),2) AS attrition_rate_pct
+FROM hr_employee_attrition
+GROUP BY department, gender
+ORDER BY department DESC, gender DESC;
